@@ -21,13 +21,13 @@ const FileUpload = ({ contract, account }) => {
                     url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
                     data: formData,
                     headers: {
-                      pinata_api_key: `217db9e30924b2b5c5cc`,
-                      pinata_secret_api_key: `38be9c2463bf467cbbe7eb7c1c3ecb485d6329d96ea4d25860cb2d71f9e3c347`,
+                      pinata_api_key: `your key`,
+                      pinata_secret_api_key: `your key`,
                       "Content-Type": "multipart/form-data",
                     },
                 });
 
-                const ImgHash = `https://pink-neighbouring-elk-241.mypinata.cloud/ipfs/${resFile.data.IpfsHash}`; 
+                const ImgHash = `https://...................../ipfs/${resFile.data.IpfsHash}`; 
 
                 contract.add(account,ImgHash)
 
