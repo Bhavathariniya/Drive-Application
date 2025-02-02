@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { ethers } from "ethers";
 import './App.css';
 import Upload  from "./artifacts/contracts/Upload.sol/Upload.json"
+import FileUpload from "./components/FileUpload";
+import Display from "./components/Display";
+import Modal from "./components/Modal";
 
 function App() {
 
@@ -16,6 +19,16 @@ function App() {
       
       if(provider){
         await provider.send("eth_requestAccounts",[]);
+
+        window.ethereum.on("chainChanged", ()=>{
+          window.location.reload();
+        });
+
+        window.ethereum.on("accountsChanged", ()=>{
+          window.location.reload();
+        });
+
+
         const signer = provider.getSigner();
         const address = await signer.getAddress()
         console.log(address);
@@ -39,9 +52,32 @@ function App() {
   },[])
 
   return (
-    <div className="App">
+    <>
+      {!modalOpen && (
+        <button className="share" onClick={() => setModalOpen(true)}>
+          Share
+        </button>
+      )}
+      {modalOpen && (
+        <Modal setModalOpen={setModalOpen} contract={contract}></Modal>
+      )} 
 
-    </div>
+      <div className="App">
+        <h1 style={{ color: "white" }}>Gdrive 3.0</h1>
+        <div class="bg"></div>
+        <div class="bg bg2"></div>
+        <div class="bg bg3"></div>
+
+        <p style={{ color: "white" }}>
+          Account : {account ? account : "Not connected"}
+        </p>
+        <FileUpload
+          account={account}
+          contract={contract}
+        ></FileUpload>
+        <Display contract={contract} account={account}></Display>
+      </div>
+    </>
   );
 }
 
